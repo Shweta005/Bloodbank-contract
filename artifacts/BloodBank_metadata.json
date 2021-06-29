@@ -6,11 +6,6 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "string",
@@ -33,22 +28,103 @@
 						"type": "uint256"
 					}
 				],
-				"name": "RegisterBloodbank",
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "add",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_city",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_email",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_contact",
+						"type": "uint256"
+					}
+				],
+				"name": "NewBank",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "admin",
-				"outputs": [
+				"inputs": [
 					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "city",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "contact",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "email",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "age",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "gender",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "bloodgrp",
+						"type": "string"
+					},
+					{
+						"internalType": "uint8",
+						"name": "height",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "weight",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "cname",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "recentDonation",
+						"type": "uint256"
 					}
 				],
-				"stateMutability": "view",
+				"name": "RegisterDonor",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -81,86 +157,10 @@
 				"name": "banks",
 				"outputs": [
 					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
+						"internalType": "address",
+						"name": "add",
+						"type": "address"
 					},
-					{
-						"internalType": "string",
-						"name": "city",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "email",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "contact",
-						"type": "uint256"
-					},
-					{
-						"components": [
-							{
-								"internalType": "uint256",
-								"name": "A_positive",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "A_negative",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "B_positive",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "B_negative",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "AB_positive",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "AB_negative",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "O_positive",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "O_negative",
-								"type": "uint256"
-							}
-						],
-						"internalType": "struct BloodBank.Bloodstock",
-						"name": "stock",
-						"type": "tuple"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "bbanks",
-				"outputs": [
 					{
 						"internalType": "string",
 						"name": "name",
@@ -182,51 +182,19 @@
 						"type": "uint256"
 					},
 					{
-						"components": [
-							{
-								"internalType": "uint256",
-								"name": "A_positive",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "A_negative",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "B_positive",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "B_negative",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "AB_positive",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "AB_negative",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "O_positive",
-								"type": "uint256"
-							},
-							{
-								"internalType": "uint256",
-								"name": "O_negative",
-								"type": "uint256"
-							}
-						],
-						"internalType": "struct BloodBank.Bloodstock",
-						"name": "stock",
-						"type": "tuple"
+						"internalType": "enum BloodBank.BloodGroup",
+						"name": "bg",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "isBank",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "isadmin",
+						"type": "uint8"
 					}
 				],
 				"stateMutability": "view",
@@ -252,75 +220,6 @@
 					{
 						"internalType": "uint256",
 						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "ddonors",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "city",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "contact",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "email",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "DOB",
-						"type": "uint256"
-					},
-					{
-						"internalType": "enum BloodBank.Gender",
-						"name": "gender",
-						"type": "uint8"
-					},
-					{
-						"internalType": "string",
-						"name": "bloodgrp",
-						"type": "string"
-					},
-					{
-						"internalType": "uint8",
-						"name": "height",
-						"type": "uint8"
-					},
-					{
-						"internalType": "uint8",
-						"name": "Weight",
-						"type": "uint8"
-					},
-					{
-						"internalType": "string",
-						"name": "cname",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "bdonated",
 						"type": "uint256"
 					}
 				],
@@ -357,6 +256,11 @@
 				"name": "donors",
 				"outputs": [
 					{
+						"internalType": "address",
+						"name": "add",
+						"type": "address"
+					},
+					{
 						"internalType": "string",
 						"name": "name",
 						"type": "string"
@@ -378,13 +282,13 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "DOB",
+						"name": "age",
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum BloodBank.Gender",
+						"internalType": "string",
 						"name": "gender",
-						"type": "uint8"
+						"type": "string"
 					},
 					{
 						"internalType": "string",
@@ -398,7 +302,7 @@
 					},
 					{
 						"internalType": "uint8",
-						"name": "Weight",
+						"name": "weight",
 						"type": "uint8"
 					},
 					{
@@ -408,7 +312,39 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "bdonated",
+						"name": "recentDonation",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"name": "stock",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
 						"type": "uint256"
 					}
 				],
@@ -418,24 +354,72 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "index",
-						"type": "uint256"
+						"internalType": "address",
+						"name": "add",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_bg",
+						"type": "uint8"
 					},
 					{
 						"internalType": "uint256",
-						"name": "_stockindex",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_no",
+						"name": "units",
 						"type": "uint256"
 					}
 				],
-				"name": "updatestockByindex",
+				"name": "updateStock",
 				"outputs": [],
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "viewStock",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			}
 		],
@@ -467,10 +451,10 @@
 	},
 	"sources": {
 		"Contract/Bloodbank.sol": {
-			"keccak256": "0x7daddd7ed83c6885aebe27647b8297b046291e0045042e929ae2c8626db7e8c2",
+			"keccak256": "0x68f761668dd3ce27beddef93481e8b6b64fbdca0f023095c403c24e087eabf47",
 			"urls": [
-				"bzz-raw://a78ceef5c694b54ac7ee0d3f6f7a74f421a9ce1084f03013d85e4334e1229a72",
-				"dweb:/ipfs/QmXzbSNvPEoYGndfTWrnpFKxaXTReYi2GYat6d7Uc7r2A2"
+				"bzz-raw://dbb79d7ef6df689d5aff223c8c0185e8fffc284f8469240462664dbf23ff5630",
+				"dweb:/ipfs/QmPmoKjYkHQv7C5qyWNufULy6T8FvyPXb8U9mUUUZpAwrX"
 			]
 		}
 	},
