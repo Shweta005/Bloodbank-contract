@@ -1,10 +1,9 @@
 pragma solidity 0.8.0;
- 
- contract BloodBank{
-     
-     
+
+contract BloodBank{
+
         address public owner;
-        
+
         enum BloodGroup{
               A_positive, //0
               A_negative, //1
@@ -43,24 +42,23 @@ pragma solidity 0.8.0;
               uint256 recentDonation;
               uint8 isDonor;
         }
-       
+
         mapping(uint8 => uint256) public stock;
         mapping(address=> uint256) public bankId;
         mapping(uint256=> Bloodbank) public banks;
         //Bloodbank[] public bbanks;
-        
+
         mapping(address=> uint256) public donorId;
         mapping(uint256=> Donor) public donors;
         //Donor[] public ddonors;
-        
+
         uint256 public counterB;
         uint256 public counterD;
-        
-        
+
         constructor(
             string memory _name,
-            string memory _city, 
-            string memory _email, 
+            string memory _city,
+            string memory _email,
             uint256 _contact
             ){
             owner = msg.sender;
@@ -75,29 +73,27 @@ pragma solidity 0.8.0;
             bank.isBank = 1;
             bank.isadmin = 1;
             banks[counterB] = bank;
-            
            }
-           
+
            modifier onlyAdmin(address _add) {
                uint256 id = bankId[_add];
-               require(banks[id].isadmin == 1 , "You don't have access.");
+               require(banks[id].isadmin == 1,"You don't have access.");
                _;
            }
            modifier NotAdmin(address _add){
                uint256 id = bankId[_add];
-               require(banks[id].isadmin == 0 ,"Bloodbank Account");
+               require(banks[id].isadmin == 0,"Bloodbank Account");
                _;
            }
-      
+
         function NewBank(     //Add new Bloodbank
             address _add,
             string memory _name,
-            string memory _city, 
+            string memory _city,
             string memory _email,
             uint256 _contact
-        
-            ) onlyAdmin(msg.sender) public {
-         
+            ) public onlyAdmin(msg.sender) {
+
             counterB++;
             Bloodbank memory bank;
             bankId[_add] = counterB;
@@ -110,7 +106,7 @@ pragma solidity 0.8.0;
             bank.isadmin = 1;
             banks[counterB] = bank;
         }
-        
+
         function RegisterDonor(      //Register Donor
               string memory _name,
               string memory _city,
@@ -123,7 +119,7 @@ pragma solidity 0.8.0;
               uint8  _weight,
               string memory _cname,
               uint256 _recentDonation
-              )NotAdmin(msg.sender) public {
+              ) public NotAdmin(msg.sender) {
                   require(msg.sender != owner,"You are Owner");
                   counterD++;
                   Donor memory donor;
@@ -143,14 +139,13 @@ pragma solidity 0.8.0;
                   donor.isDonor = 1;
                   donors[counterD] = donor;
               }
-              
-              
+
         function ViewBank(        //View Bloodbank's Data
             address _add
             ) public returns(
-                address, 
-                string memory, 
-                string memory, 
+                address,
+                string memory,
+                string memory,
                 string memory,
                 uint256,
                 uint8,
@@ -165,8 +160,8 @@ pragma solidity 0.8.0;
                 banks[id].isBank,
                  banks[id].isadmin
                 );
-        }      
-           
+        }
+
           function ViewDonor(address _add) public returns(  // View Donor's Data
                      address,
                      string memory,
@@ -176,22 +171,22 @@ pragma solidity 0.8.0;
                      uint256,
                      string  memory,
                      string  memory,
-                     uint8,  
-                     uint8,  
+                     uint8,
+                     uint8,
                      string  memory,
                      uint256){
                      uint256 id = donorId[_add];
               return(
-                     donors[id].add, 
-                     donors[id].name, 
-                     donors[id].city,  
+                     donors[id].add,
+                     donors[id].name,
+                     donors[id].city,
                      donors[id].contact,
-                     donors[id].email, 
-                     donors[id].age, 
-                     donors[id].gender, 
+                     donors[id].email,
+                     donors[id].age,
+                     donors[id].gender,
                      donors[id].bloodgrp,
-                     donors[id].height, 
-                     donors[id].weight, 
+                     donors[id].height,
+                     donors[id].weight,
                      donors[id].cname,
                      donors[id].recentDonation
                   );
