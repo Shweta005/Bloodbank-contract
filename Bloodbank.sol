@@ -15,7 +15,15 @@ pragma solidity 0.8.0;
               O_positive,  //6
               O_negative   //7
               }
-              
+        
+         struct Requests{
+             address _requester;
+             address _to;
+             uint8 _bloodgrp;
+             uint256 _qty;
+             uint isGranted;
+         }     
+      
               
         struct  Bloodbank{
             address add;
@@ -23,65 +31,50 @@ pragma solidity 0.8.0;
             string  city;
             string  email;
             uint256 contact;
-           // BloodGroup  bg;
             uint8 isBank;
             uint8 isadmin;
+            mapping(uint8 => uint256)  stock;
         }
-        struct Donor{
+        
+      struct Donor{
               address add;
               string name;
               string city;
               uint256 contact;
-              string email;
               uint256 age;
               string  gender;
               string bloodgrp;
-              uint8  height;
-              uint8  weight;
               string cname;
               uint256 recentDonation;
               uint8 isDonor;
-        }
+      }
        
-       mapping(uint8 => uint256) public stock;
+  
         mapping(address=> uint256) public bankId;
         mapping(uint256=> Bloodbank) public banks;
-        //Bloodbank[] public bbanks;
+        
         
         mapping(address=> uint256) public donorId;
         mapping(uint256=> Donor) public donors;
-        //Donor[] public ddonors;
         
+        mapping(uint256 =>Requests) public request;
+       
         uint256 public counterB;
         uint256 public counterD;
+        uint256 public counterCD;
+        uint256 public counterR;
         
-        
-        constructor(
-            string memory _name,
-            string memory _city, 
-            string memory _email, 
-            uint256 _contact
-            ){
+        constructor( ){
             owner = msg.sender;
-            counterB++;
-            Bloodbank memory bank;
-            bankId[owner] = counterB;
-            bank.add = owner;
-            bank.name = _name;
-            bank.city = _city;
-            bank.email = _email;
-            bank.contact = _contact;
-            bank.isBank = 1;
-            bank.isadmin = 1;
-            banks[counterB] = bank;
-            
            }
            
            modifier onlyAdmin(address _add) {
                uint256 id = bankId[_add];
-               require(banks[id].isadmin == 1 , "You don't have access.");
+               require(banks[id].isadmin == 1 || _add == owner , "You don't have access.");
                _;
            }
+           
+          
            modifier NotAdmin(address _add){
                uint256 id = bankId[_add];
                require(banks[id].isadmin == 0 ,"Bloodbank Account");
@@ -96,9 +89,8 @@ pragma solidity 0.8.0;
             uint256 _contact
         
             ) onlyAdmin(msg.sender) public {
-         
             counterB++;
-            Bloodbank memory bank;
+            Bloodbank storage bank = banks[counterB];
             bankId[_add] = counterB;
             bank.add = _add;
             bank.name = _name;
@@ -107,23 +99,19 @@ pragma solidity 0.8.0;
             bank.contact = _contact;
             bank.isBank = 1;
             bank.isadmin = 1;
-            banks[counterB] = bank;
+            
         }
         
-        function RegisterDonor(      //Register Donor
+     function RegisterDonor(      //Register Donor
               string memory _name,
               string memory _city,
               uint256 _contact,
-              string memory _email,
               uint256 _age,
               string memory _gender,
               string memory _bloodgrp,
-              uint8  _height,
-              uint8  _weight,
               string memory _cname,
               uint256 _recentDonation
               )NotAdmin(msg.sender) public {
-                  require(msg.sender != owner,"You are Owner");
                   counterD++;
                   Donor memory donor;
                   donorId[msg.sender] = counterD;
@@ -131,22 +119,19 @@ pragma solidity 0.8.0;
                   donor.name = _name;
                   donor.city = _city;
                   donor.contact = _contact;
-                  donor.email = _email;
                   donor.age = _age;
                   donor.gender = _gender;
                   donor.bloodgrp = _bloodgrp;
-                  donor.height = _height;
-                  donor.weight = _weight;
                   donor.cname = _cname;
                   donor.recentDonation = (_recentDonation * 1 days);
                   donor.isDonor = 1;
                   donors[counterD] = donor;
-              }
+              } 
               
               
         function ViewBank(        //View Bloodbank's Data
             address _add
-            ) public returns(
+            ) public view returns(
                 address, 
                 string memory, 
                 string memory, 
@@ -166,17 +151,14 @@ pragma solidity 0.8.0;
                 );
         }      
            
-          function ViewDonor(address _add) public returns(  // View Donor's Data
+        function ViewDonor(address _add) public view returns(  // View Donor's Data
                      address,
                      string memory,
                      string  memory,
                      uint256,
-                     string  memory,
                      uint256,
                      string  memory,
                      string  memory,
-                     uint8,  
-                     uint8,  
                      string  memory,
                      uint256){
                      uint256 id = donorId[_add];
@@ -185,40 +167,71 @@ pragma solidity 0.8.0;
                      donors[id].name, 
                      donors[id].city,  
                      donors[id].contact,
-                     donors[id].email, 
                      donors[id].age, 
                      donors[id].gender, 
                      donors[id].bloodgrp,
-                     donors[id].height, 
-                     donors[id].weight, 
                      donors[id].cname,
                      donors[id].recentDonation
                   );
           } 
-           
-           //View Stock of Blood
-            function viewStock() public view returns(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) {
-            return (stock[0],
-                    stock[1],
-                    stock[2],
-                    stock[3],
-                    stock[4],
-                    stock[5],
-                    stock[6],
-                    stock[7]); 
-        }
-              
-        //update Blood Stock
-        function updateStock(uint8 _bg,uint256 units) public {
-            stock[_bg] = units;
-           
+          
+          function RequestBlood(address _add,uint8 _bloodgrp,uint256 _units) public { //Request for blood to particular center
+              counterR++;
+              Requests memory req = Requests(msg.sender,_add,_bloodgrp,_units,0);
+              request[counterR] = req;
+          }
+          
+          
+          function GrantRequest(uint _id)public onlyAdmin(msg.sender) { //Admin will grant the blood request  if stock available
+             // check stock exist
+             request[_id].isGranted = 1;
             
-        }
+          }
+          
+          
+          
+          //After blood donation of donor at bloodbank,Admin will Update Stock
+          function ConfirmDonation(address _add,uint8 _type,uint256 _units) onlyAdmin(msg.sender) public   { 
+            require(donors[donorId[_add]].isDonor == 1,"Donor does not exist");
+            counterCD++;
+            banks[bankId[msg.sender]].stock[_type] += _units;
+             
+           }
+           
+           
+           /*//have issue with array length
+            function viewStock(address _add) public view returns(uint256[] memory) {
+                uint n = 8;
+                uint256[n] memory s;
+                
+                for(uint8 i; i<n ; i++){
+                   s[i] = banks[bankId[_add]].stock[i];
+                }
+            return s;
+            }*/
+
+ }       
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+         
         
-      
-     
-        
-       
         
         
         
@@ -234,4 +247,4 @@ pragma solidity 0.8.0;
         
         
         
- }
+ 
