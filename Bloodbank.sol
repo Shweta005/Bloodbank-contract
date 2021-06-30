@@ -1,10 +1,9 @@
 pragma solidity 0.8.0;
- 
- contract BloodBank{
-     
-     
+
+contract BloodBank{
+
         address public owner;
-        
+
         enum BloodGroup{
               A_positive, //0
               A_negative, //1
@@ -15,6 +14,7 @@ pragma solidity 0.8.0;
               O_positive,  //6
               O_negative   //7
               }
+<<<<<<< HEAD
         
          struct Requests{
              address _requester;
@@ -25,18 +25,31 @@ pragma solidity 0.8.0;
          }     
       
               
+=======
+
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
         struct  Bloodbank{
             address add;
             string  name;
             string  city;
             string  email;
             uint256 contact;
+<<<<<<< HEAD
+=======
+           
+           
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
             uint8 isBank;
             uint8 isadmin;
             mapping(uint8 => uint256)  stock;
         }
+<<<<<<< HEAD
         
       struct Donor{
+=======
+
+        
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
               address add;
               string name;
               string city;
@@ -47,6 +60,7 @@ pragma solidity 0.8.0;
               string cname;
               uint256 recentDonation;
               uint8 isDonor;
+<<<<<<< HEAD
       }
        
   
@@ -66,29 +80,43 @@ pragma solidity 0.8.0;
         
         constructor( ){
             owner = msg.sender;
+=======
+        
+
+       
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
            }
-           
+
            modifier onlyAdmin(address _add) {
                uint256 id = bankId[_add];
+<<<<<<< HEAD
                require(banks[id].isadmin == 1 || _add == owner , "You don't have access.");
+=======
+              
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
                _;
            }
            
           
            modifier NotAdmin(address _add){
                uint256 id = bankId[_add];
-               require(banks[id].isadmin == 0 ,"Bloodbank Account");
+               require(banks[id].isadmin == 0,"Bloodbank Account");
                _;
            }
-      
+
         function NewBank(     //Add new Bloodbank
             address _add,
             string memory _name,
-            string memory _city, 
+            string memory _city,
             string memory _email,
             uint256 _contact
+<<<<<<< HEAD
         
             ) onlyAdmin(msg.sender) public {
+=======
+            ) public onlyAdmin(msg.sender) {
+
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
             counterB++;
             Bloodbank storage bank = banks[counterB];
             bankId[_add] = counterB;
@@ -101,8 +129,13 @@ pragma solidity 0.8.0;
             bank.isadmin = 1;
             
         }
+<<<<<<< HEAD
         
      function RegisterDonor(      //Register Donor
+=======
+
+        
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
               string memory _name,
               string memory _city,
               uint256 _contact,
@@ -111,7 +144,11 @@ pragma solidity 0.8.0;
               string memory _bloodgrp,
               string memory _cname,
               uint256 _recentDonation
+<<<<<<< HEAD
               )NotAdmin(msg.sender) public {
+=======
+              
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
                   counterD++;
                   Donor memory donor;
                   donorId[msg.sender] = counterD;
@@ -126,6 +163,7 @@ pragma solidity 0.8.0;
                   donor.recentDonation = (_recentDonation * 1 days);
                   donor.isDonor = 1;
                   donors[counterD] = donor;
+<<<<<<< HEAD
               } 
               
               
@@ -135,6 +173,16 @@ pragma solidity 0.8.0;
                 address, 
                 string memory, 
                 string memory, 
+=======
+              }
+
+        function ViewBank(        //View Bloodbank's Data
+            address _add
+            ) public returns(
+                address,
+                string memory,
+                string memory,
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
                 string memory,
                 uint256,
                 uint8,
@@ -149,9 +197,15 @@ pragma solidity 0.8.0;
                 banks[id].isBank,
                  banks[id].isadmin
                 );
+<<<<<<< HEAD
         }      
            
         function ViewDonor(address _add) public view returns(  // View Donor's Data
+=======
+        }
+
+          
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
                      address,
                      string memory,
                      string  memory,
@@ -159,14 +213,20 @@ pragma solidity 0.8.0;
                      uint256,
                      string  memory,
                      string  memory,
+<<<<<<< HEAD
+=======
+                     
+                     
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
                      string  memory,
                      uint256){
                      uint256 id = donorId[_add];
               return(
-                     donors[id].add, 
-                     donors[id].name, 
-                     donors[id].city,  
+                     donors[id].add,
+                     donors[id].name,
+                     donors[id].city,
                      donors[id].contact,
+<<<<<<< HEAD
                      donors[id].age, 
                      donors[id].gender, 
                      donors[id].bloodgrp,
@@ -248,3 +308,31 @@ pragma solidity 0.8.0;
         
         
  
+=======
+                     donors[id].email,
+                     donors[id].age,
+                     donors[id].gender,
+                     donors[id].bloodgrp,
+                     donors[id].height,
+                     donors[id].weight,
+                     donors[id].cname,
+                     donors[id].recentDonation
+                  );
+          }
+
+           //View Stock of Blood
+            function viewStock() public view returns(uint256[]) {
+                uint256[8] memory stocks;
+                for(uint i; i<8; i++){
+                    stocks[i] = stock[i];
+                };
+                return stocks;
+        }
+
+        //update Blood Stock
+        function updateStock(uint8 _bg,uint256 units) public {
+            stock[_bg] = units;
+            banks[bankId[msg.sender]].bloodGroupQty[_bg] += units;
+        }
+ }
+>>>>>>> 01907af15ea46aff20c6a73048e44fdc516ae431
