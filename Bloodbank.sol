@@ -15,8 +15,7 @@ pragma solidity 0.8.0;
               O_positive,  //6
               O_negative   //7
               }
-              
-              
+
         struct  Bloodbank{
             address add;
             string  name;
@@ -24,9 +23,11 @@ pragma solidity 0.8.0;
             string  email;
             uint256 contact;
            // BloodGroup  bg;
+           mapping(uint8 => uint256) bloodGroupQty;
             uint8 isBank;
             uint8 isadmin;
         }
+
         struct Donor{
               address add;
               string name;
@@ -43,7 +44,7 @@ pragma solidity 0.8.0;
               uint8 isDonor;
         }
        
-       mapping(uint8 => uint256) public stock;
+        mapping(uint8 => uint256) public stock;
         mapping(address=> uint256) public bankId;
         mapping(uint256=> Bloodbank) public banks;
         //Bloodbank[] public bbanks;
@@ -211,27 +212,6 @@ pragma solidity 0.8.0;
         //update Blood Stock
         function updateStock(uint8 _bg,uint256 units) public {
             stock[_bg] = units;
-           
-            
+            banks[bankId[msg.sender]].bloodGroupQty[_bg] += units;
         }
-        
-      
-     
-        
-       
-        
-        
-        
-       
-        
-        
-       
-             
-            
-           
-           
-        
-        
-        
-        
  }
