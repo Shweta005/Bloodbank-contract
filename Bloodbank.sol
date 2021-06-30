@@ -195,20 +195,17 @@ pragma solidity 0.8.0;
                      donors[id].cname,
                      donors[id].recentDonation
                   );
-          } 
-           
+          }
+
            //View Stock of Blood
-            function viewStock() public view returns(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256) {
-            return (stock[0],
-                    stock[1],
-                    stock[2],
-                    stock[3],
-                    stock[4],
-                    stock[5],
-                    stock[6],
-                    stock[7]); 
+            function viewStock() public view returns(uint256[]) {
+                uint256[8] memory stocks;
+                for(uint i; i<8; i++){
+                    stocks[i] = stock[i];
+                };
+                return stocks;
         }
-              
+
         //update Blood Stock
         function updateStock(uint8 _bg,uint256 units) public {
             stock[_bg] = units;
