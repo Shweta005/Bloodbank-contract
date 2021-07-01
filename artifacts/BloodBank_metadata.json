@@ -72,13 +72,19 @@
 					{
 						"indexed": false,
 						"internalType": "address",
-						"name": "_from",
+						"name": "_for",
 						"type": "address"
 					},
 					{
 						"indexed": false,
 						"internalType": "uint256",
 						"name": "_time",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "_slottime",
 						"type": "uint256"
 					}
 				],
@@ -209,6 +215,11 @@
 						"internalType": "address",
 						"name": "_donor",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_slottime",
+						"type": "uint256"
 					}
 				],
 				"name": "BookSlot",
@@ -492,6 +503,11 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -687,6 +703,11 @@
 						"internalType": "uint8",
 						"name": "isDonor",
 						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_slot",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -816,10 +837,10 @@
 	},
 	"sources": {
 		"Contract/Bloodbank.sol": {
-			"keccak256": "0x23fef843b034e77ff5289e7123f2b3f7aeb5e2c5e6eaac98349029cbe26ba1c7",
+			"keccak256": "0x63b8115d90e93b8cb98f813e6d3bdc227a26101dcbb34d6fe37145e825801b27",
 			"urls": [
-				"bzz-raw://5623da1d59faa994c6f0c41868c07ea08ff80a3ea6d4befa1919135a5fbd72c6",
-				"dweb:/ipfs/QmaqmHqXDLi8sHbGdGdeMzujkm66bhzteEorsubdiKUJGH"
+				"bzz-raw://921648895ffc58a2c3f38bc8eb76230a216a9758e579e9260ca7d1c2936307f5",
+				"dweb:/ipfs/QmVkDN7WJQT7BKqq8Wy1r8XR2cycnXPoAzzr84iu6QrkjM"
 			]
 		}
 	},

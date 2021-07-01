@@ -48,6 +48,7 @@ pragma solidity 0.8.0;
               string cname;
               uint256 recentDonation;
               uint8 isDonor;
+              uint256 _slot;
            }
        
         //Mappings
@@ -59,7 +60,7 @@ pragma solidity 0.8.0;
         mapping(uint256 => uint256[]) public slot;
         
         //events
-        event Bookslot(address _from, uint256 _time);
+        event Bookslot(address _for, uint256 _time,uint256 _slottime);
         event DonorRegistered(address _donor,address _center,string _bloodgrp,uint256 _recentDonation);
         event BankRegistered(address _bank,string _centerName);
         event BloodRequest(address _requester,address _center,uint8 _bloodgrp, uint256 _units,uint256 _time);
@@ -133,10 +134,13 @@ pragma solidity 0.8.0;
         }      
         
          //After registration of donor, admin will book slot for donor if recentDonation condition fulfills
-         function BookSlot(address _donor) onlyAdmin(msg.sender) public{
+         function BookSlot(address _donor,uint256 _slottime) onlyAdmin(msg.sender) public{
               //check the recentDonation of donor is 56 days, if valid then only send slot
               require(donors[donorId[_donor]].recentDonation >= (56 * 1 days),"Wait for some days.");
-              emit Bookslot(msg.sender , block.timestamp);
+              uint256 id = donorId[_donor]; 
+              donors[id]._slot = _slottime;
+              slot[id].push(_slottime);
+              emit Bookslot( _donor,block.timestamp,_slottime);
           }
         
         
@@ -208,6 +212,7 @@ pragma solidity 0.8.0;
                      string  memory,
                      string  memory,
                      string  memory,
+                     uint256,
                      uint256){
                      uint256 id = donorId[_add];
             return( donors[id].add, 
@@ -219,7 +224,8 @@ pragma solidity 0.8.0;
                      donors[id].gender, 
                      donors[id].bloodgrp,
                      donors[id].cname,
-                     donors[id].recentDonation
+                     donors[id].recentDonation,
+                     donors[id]._slot
                   );
           } 
           
