@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/Shweta005/Bloodbank-contract/issues"
   },
-  "homepage": "https://github.com/Shweta005/Bloodbank-contract#readme"
+  "homepage": "https://github.com/Shweta005/Bloodbank-contract#readme",
+  "dependencies": {
+    "chai": "^4.3.4"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.11"
+  }
 }
