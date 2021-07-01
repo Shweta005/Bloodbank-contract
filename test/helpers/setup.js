@@ -15,7 +15,7 @@ const Events = [
 ];
 
 module.exports = {
-    DAO,
+    Bank,
     expect,
     BN,
     expectRevert,

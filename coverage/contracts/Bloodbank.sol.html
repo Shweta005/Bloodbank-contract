@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts\Bloodbank.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> Bloodbank.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">1.82% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>1/55</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">8.33% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">1.69% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>1/59</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+pragma solidity 0.8.0;
+ 
+ contract BloodBank{
+     
+     
+        address public owner;
+        
+        enum BloodGroup{
+              A_positive, //0
+              A_negative, //1
+              B_positive, //2
+              B_negative,  //3
+              AB_positive, //4
+              AB_negative, //5
+              O_positive,  //6
+              O_negative   //7
+              }
+        
+         struct Requests{
+             address _requester;
+             address _to;
+             uint8 _bloodgrp;
+             uint256 _qty;
+             uint isGranted;
+             }     
+      
+              
+        struct  Bloodbank{
+            address add;
+            string  name;
+            string  city;
+            string  email;
+            uint256 contact;
+            uint8 isBank;
+            uint8 isadmin;
+            mapping(uint8 =&gt; uint256)  stock;
+            }
+        
+      struct Donor{
+              address add;
+              address cadd;
+              string name;
+              string city;
+              uint256 contact;
+              uint256 age;
+              string  gender;
+              string bloodgrp;
+              string cname;
+              uint256 recentDonation;
+              uint8 isDonor;
+              uint256 _slot;
+           }
+       
+        //Mappings
+        mapping(address=&gt; uint256) public bankId;
+        mapping(uint256=&gt; Bloodbank) public banks;
+        mapping(address=&gt; uint256) public donorId;
+        mapping(uint256=&gt; Donor) public donors;
+        mapping(uint256 =&gt;Requests) public request;
+        mapping(uint256 =&gt; uint256[]) public slot;
+        
+        //events
+        event Bookslot(address _for, uint256 _time,uint256 _slottime);
+        event DonorRegistered(address _donor,address _center,string _bloodgrp,uint256 _recentDonation);
+        event BankRegistered(address _bank,string _centerName);
+        event BloodRequest(address _requester,address _center,uint8 _bloodgrp, uint256 _units,uint256 _time);
+        event RequestGranted(address _admin, uint256 _requesterid,uint256 _time);
+        event StockIncreased(address _center,uint8 _bloodgrp,uint256 _qty,uint256 _time);
+        event StockDecreased(address _center,uint8 _bloodgrp,uint256 _qty,uint256 _time);
+        
+        //counters &amp; arrays
+        uint256 public counterB;
+        uint256 public counterD;
+        uint256 public counterR;
+        uint256[8]  Showstock;
+        uint256[]   timestamp;
+       
+       
+        constructor( ){
+            owner = msg.sender;
+           }
+           
+           //admin check
+<span class="fstat-no" title="function not covered" >           modifier onlyAdmin(address _add) {</span>
+<span class="cstat-no" title="statement not covered" >               uint256 id = bankId[_add];</span>
+<span class="cstat-no" title="statement not covered" >               require(banks[id].isadmin == 1 || _add == owner , "You don't have access.")</span>;
+               _;
+           }
+            
+            //Add new Bloodbank
+<span class="fstat-no" title="function not covered" >          function NewBank(     </span>
+            address _add,
+            string memory _name,
+            string memory _city, 
+            string memory _email,
+            uint256 _contact
+        
+            ) onlyAdmin(msg.sender) public {
+<span class="cstat-no" title="statement not covered" >            require(banks[bankId[msg.sender]].isBank == 0,"Bloodbank is already registered")</span>;
+            counterB++;
+<span class="cstat-no" title="statement not covered" >            Bloodbank storage bank = banks[counterB];</span>
+<span class="cstat-no" title="statement not covered" >            bankId[_add] = counterB</span>;
+<span class="cstat-no" title="statement not covered" >            bank.add = _add</span>;
+<span class="cstat-no" title="statement not covered" >            bank.name = _name</span>;
+<span class="cstat-no" title="statement not covered" >            bank.city = _city</span>;
+<span class="cstat-no" title="statement not covered" >            bank.email = _email</span>;
+<span class="cstat-no" title="statement not covered" >            bank.contact = _contact</span>;
+<span class="cstat-no" title="statement not covered" >            bank.isBank = 1</span>;
+<span class="cstat-no" title="statement not covered" >            bank.isadmin = 1</span>;
+<span class="cstat-no" title="statement not covered" >            emit BankRegistered( _add,_name);</span>
+        }
+        
+           //View Bloodbank's Data
+<span class="fstat-no" title="function not covered" >          function ViewBank(        </span>
+            address _add
+            ) onlyAdmin(msg.sender) public view returns(
+                address, 
+                string memory, 
+                string memory, 
+                string memory,
+                uint256,
+                uint8,
+                uint8){
+<span class="cstat-no" title="statement not covered" >            uint256 id = bankId[_add];</span>
+<span class="cstat-no" title="statement not covered" >            return (</span>
+                banks[id].add,
+                banks[id].name,
+                banks[id].city,
+                banks[id].email,
+                banks[id].contact,
+                banks[id].isBank,
+                 banks[id].isadmin
+                );
+        }      
+        
+         //After registration of donor, admin will book slot for donor if recentDonation condition fulfills
+<span class="fstat-no" title="function not covered" >         function BookSlot(address _donor,uint256 _slottime) onlyAdmin(msg.sender) public{</span>
+              //check the recentDonation of donor is 56 days, if valid then only send slot
+<span class="cstat-no" title="statement not covered" >              require(donors[donorId[_donor]].recentDonation &gt;= (56 * 1 days),"Wait for some days.")</span>;
+<span class="cstat-no" title="statement not covered" >              uint256 id = donorId[_donor]; </span>
+<span class="cstat-no" title="statement not covered" >              donors[id]._slot = _slottime</span>;
+<span class="cstat-no" title="statement not covered" >              slot[id].push(_slottime)</span>;
+<span class="cstat-no" title="statement not covered" >              emit Bookslot( _donor,block.timestamp,_slottime);</span>
+          }
+        
+        
+          //If stock is available admin will grant request
+<span class="fstat-no" title="function not covered" >         function GrantRequest(</span>
+              uint _id)
+              public onlyAdmin(msg.sender) { //Admin will grant the blood request  if stock available
+<span class="cstat-no" title="statement not covered" >              uint8 grp = request[_id]._bloodgrp;</span>
+<span class="cstat-no" title="statement not covered" >              require(banks[_id].stock[grp] != 0,"Stock is empty")</span>;
+<span class="cstat-no" title="statement not covered" >              request[_id].isGranted = 1</span>;
+<span class="cstat-no" title="statement not covered" >               emit RequestGranted(msg.sender, _id,block.timestamp);</span>
+          }
+          
+          //Quantity minus
+<span class="fstat-no" title="function not covered" >         function ReduceStock(address _add,uint8 _bloodgrp,uint256 _qty)onlyAdmin(msg.sender) public {</span>
+<span class="cstat-no" title="statement not covered" >             banks[bankId[_add]].stock[_bloodgrp] -= _qty</span>;
+<span class="cstat-no" title="statement not covered" >              emit StockDecreased(msg.sender,_bloodgrp , _qty,block.timestamp);</span>
+         }
+          
+          //Quantity plus
+<span class="fstat-no" title="function not covered" >         function IncreaseStock(address _add,uint8 _bloodgrp,uint256 _qty)onlyAdmin(msg.sender) public {</span>
+<span class="cstat-no" title="statement not covered" >             banks[bankId[_add]].stock[_bloodgrp] += _qty</span>;
+<span class="cstat-no" title="statement not covered" >             emit StockIncreased(msg.sender,_bloodgrp , _qty,block.timestamp);</span>
+         }
+         
+        
+            //Register Donor
+<span class="fstat-no" title="function not covered" >        function RegisterDonor(  </span>
+              address _cadd,                    
+              string memory _name,
+              string memory _city,
+              uint256 _contact,
+              uint256 _age,
+              string memory _gender,
+              string memory _bloodgrp,
+              string memory _cname,
+              uint256 _recentDonation
+              ) public {
+<span class="cstat-no" title="statement not covered" >                  require(donors[donorId[msg.sender]].isDonor==0,"Already registered")</span>;
+<span class="cstat-no" title="statement not covered" >                  require(banks[bankId[_cadd]].isBank == 1, "Bloodbank not exist")</span>;
+                  counterD++;
+<span class="cstat-no" title="statement not covered" >                  Donor memory donor;</span>
+<span class="cstat-no" title="statement not covered" >                  donorId[msg.sender] = counterD</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.add = msg.sender</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.cadd = _cadd</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.name = _name</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.city = _city</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.contact = _contact</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.age = _age</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.gender = _gender</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.bloodgrp = _bloodgrp</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.cname = _cname</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.recentDonation = (_recentDonation * 1 days)</span>;
+<span class="cstat-no" title="statement not covered" >                  donor.isDonor = 1</span>;
+<span class="cstat-no" title="statement not covered" >                  donors[counterD] = donor</span>;
+<span class="cstat-no" title="statement not covered" >                 emit DonorRegistered(msg.sender,_cadd,_bloodgrp,_recentDonation);</span>
+              } 
+              
+             // View Donor's Data 
+<span class="fstat-no" title="function not covered" >        function ViewDonor(</span>
+                     address _add) 
+                     public view returns(  
+                     address,
+                     address,
+                     string memory,
+                     string  memory,
+                     uint256,
+                     uint256,
+                     string  memory,
+                     string  memory,
+                     string  memory,
+                     uint256,
+                     uint256){
+<span class="cstat-no" title="statement not covered" >                     uint256 id = donorId[_add];</span>
+<span class="cstat-no" title="statement not covered" >            return( donors[id].add, </span>
+                     donors[id].cadd,
+                     donors[id].name, 
+                     donors[id].city,  
+                     donors[id].contact,
+                     donors[id].age, 
+                     donors[id].gender, 
+                     donors[id].bloodgrp,
+                     donors[id].cname,
+                     donors[id].recentDonation,
+                     donors[id]._slot
+                  );
+          } 
+          
+          //Request for blood to particular center
+<span class="fstat-no" title="function not covered" >          function RequestBlood(address _add,uint8 _bloodgrp,uint256 _units) public { </span>
+              counterR++;
+<span class="cstat-no" title="statement not covered" >              Requests memory req = Requests(msg.sender,_add,_bloodgrp,_units,0);</span>
+<span class="cstat-no" title="statement not covered" >              request[counterR] = req</span>;
+<span class="cstat-no" title="statement not covered" >               emit BloodRequest(msg.sender, _add, _bloodgrp, _units,block.timestamp);</span>
+          }
+          
+          //Stock availability
+<span class="fstat-no" title="function not covered" >            function viewStock(address _add) public view returns(uint256[8] memory) {</span>
+<span class="cstat-no" title="statement not covered" >                uint256[8] memory s;</span>
+<span class="cstat-no" title="statement not covered" >                for(uint8 i; i&lt;8 ; i++){</span>
+<span class="cstat-no" title="statement not covered" >                   s[i] = banks[bankId[_add]].stock[i]</span>;
+                }
+<span class="cstat-no" title="statement not covered" >            return s;</span>
+            }
+&nbsp;
+ }       
+           </pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jul 01 2021 22:35:25 GMT+0530 (India Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
