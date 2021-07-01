@@ -1,9 +1,10 @@
 pragma solidity 0.8.0;
-
-contract BloodBank{
-
+ 
+ contract BloodBank{
+     
+     
         address public owner;
-
+        
         enum BloodGroup{
               A_positive, //0
               A_negative, //1
@@ -14,7 +15,6 @@ contract BloodBank{
               O_positive,  //6
               O_negative   //7
               }
-
         
          struct Requests{
              address _requester;
@@ -24,7 +24,7 @@ contract BloodBank{
              uint isGranted;
          }     
       
-    
+              
         struct  Bloodbank{
             address add;
             string  name;
@@ -34,12 +34,12 @@ contract BloodBank{
             uint8 isBank;
             uint8 isadmin;
             mapping(uint8 => uint256)  stock;
+          
         }
-
         
       struct Donor{
-
               address add;
+              address cadd;
               string name;
               string city;
               uint256 contact;
@@ -65,31 +65,27 @@ contract BloodBank{
         uint256 public counterD;
         uint256 public counterCD;
         uint256 public counterR;
+        uint256[8] public Showstock;
         
         constructor( ){
             owner = msg.sender;
-               }
-
+           }
+           
            modifier onlyAdmin(address _add) {
                uint256 id = bankId[_add];
                require(banks[id].isadmin == 1 || _add == owner , "You don't have access.");
                _;
            }
-           
           
-           modifier NotAdmin(address _add){
-               uint256 id = bankId[_add];
-               require(banks[id].isadmin == 0,"Bloodbank Account");
-               _;
-           }
-
         function NewBank(     //Add new Bloodbank
             address _add,
             string memory _name,
-            string memory _city,
+            string memory _city, 
             string memory _email,
             uint256 _contact
-           ) public onlyAdmin(msg.sender) {
+        
+            ) onlyAdmin(msg.sender) public {
+            require(banks[bankId[msg.sender]].isBank == 0,"Bloodbank is already registered");
             counterB++;
             Bloodbank storage bank = banks[counterB];
             bankId[_add] = counterB;
@@ -102,7 +98,9 @@ contract BloodBank{
             bank.isadmin = 1;
             
         }
-     function RegisterDonor(      //Register Donor
+        
+     function RegisterDonor(  //Register Donor
+              address _cadd,                    
               string memory _name,
               string memory _city,
               uint256 _contact,
@@ -111,12 +109,14 @@ contract BloodBank{
               string memory _bloodgrp,
               string memory _cname,
               uint256 _recentDonation
-
-              )NotAdmin(msg.sender) public {
+              ) public {
+                  require(donors[donorId[msg.sender]].isDonor==0,"Already registered");
+                  require(banks[bankId[_cadd]].isBank == 1, "Bloodbank not exist");
                   counterD++;
                   Donor memory donor;
                   donorId[msg.sender] = counterD;
                   donor.add = msg.sender;
+                  donor.cadd = _cadd;
                   donor.name = _name;
                   donor.city = _city;
                   donor.contact = _contact;
@@ -127,13 +127,13 @@ contract BloodBank{
                   donor.recentDonation = (_recentDonation * 1 days);
                   donor.isDonor = 1;
                   donors[counterD] = donor;
-
+                
               } 
               
               
         function ViewBank(        //View Bloodbank's Data
             address _add
-            ) public view returns(
+            ) onlyAdmin(msg.sender) public view returns(
                 address, 
                 string memory, 
                 string memory, 
@@ -151,10 +151,12 @@ contract BloodBank{
                 banks[id].isBank,
                  banks[id].isadmin
                 );
-
         }      
            
-        function ViewDonor(address _add) public view returns(  // View Donor's Data
+        function ViewDonor(
+                     address _add) 
+                     public view returns(  // View Donor's Data
+                     address,
                      address,
                      string memory,
                      string  memory,
@@ -165,10 +167,12 @@ contract BloodBank{
                      string  memory,
                      uint256){
                      uint256 id = donorId[_add];
-              return(
-                     donors[id].add,
-                     donors[id].name,
-                     donors[id].city,
+                   
+                     
+            return( donors[id].add, 
+                     donors[id].cadd,
+                     donors[id].name, 
+                     donors[id].city,  
                      donors[id].contact,
                      donors[id].age, 
                      donors[id].gender, 
@@ -185,33 +189,68 @@ contract BloodBank{
           }
           
           
-          function GrantRequest(uint _id)public onlyAdmin(msg.sender) { //Admin will grant the blood request  if stock available
-             // check stock exist
-             request[_id].isGranted = 1;
-            
+          function GrantRequest(
+              uint _id)
+              public onlyAdmin(msg.sender) { //Admin will grant the blood request  if stock available
+              uint8 grp = request[_id]._bloodgrp;
+              require(banks[_id].stock[grp] != 0,"Stock is empty");
+              request[_id].isGranted = 1;
           }
           
+         function ReduceStock(address _add,uint8 _bloodgrp,uint256 _qty)onlyAdmin(msg.sender) public {
+             banks[bankId[_add]].stock[_bloodgrp] -= _qty;
+         }
           
-          
-          //After blood donation of donor at bloodbank,Admin will Update Stock
-          function ConfirmDonation(address _add,uint8 _type,uint256 _units) onlyAdmin(msg.sender) public   { 
-            require(donors[donorId[_add]].isDonor == 1,"Donor does not exist");
-            counterCD++;
-            banks[bankId[msg.sender]].stock[_type] += _units;
-             
-           }
+         function IncreaseStock(address _add,uint8 _bloodgrp,uint256 _qty)onlyAdmin(msg.sender) public {
+             banks[bankId[_add]].stock[_bloodgrp] += _qty;
+         }
            
            
-           /*//have issue with array length
-            function viewStock(address _add) public view returns(uint256[] memory) {
-                uint n = 8;
-                uint256[n] memory s;
+          //Stock availability
+            function viewStock(address _add) public view returns(uint256[8] memory) {
                 
-                for(uint8 i; i<n ; i++){
+                uint256[8] memory s;
+                for(uint8 i; i<8 ; i++){
                    s[i] = banks[bankId[_add]].stock[i];
                 }
             return s;
-            }*/
+            }
 
  }       
-
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+         
+        
+        
+        
+        
+       
+        
+        
+       
+             
+            
+           
+           
+        
+        
+        
+        
+ 
