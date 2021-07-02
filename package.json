@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "truffle test",
+    "coverage": "truffle run coverage"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,8 @@
   },
   "homepage": "https://github.com/Shweta005/Bloodbank-contract#readme",
   "dependencies": {
-    "chai": "^4.3.4"
+    "chai": "^4.3.4",
+    "solidity-coverage": "^0.7.16"
   },
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.11"
