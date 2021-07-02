@@ -79,26 +79,26 @@ pragma solidity 0.8.0;
        
         constructor( ){
             owner = msg.sender;
-           }
+        }
            
-           //admin check
-           modifier onlyAdmin(address _add) {
-               uint256 id = bankId[_add];
-               require(banks[id].isadmin == 1 || _add == owner , "You don't have access.");
-               _;
-           }
+        //admin check
+        modifier onlyAdmin(address _add) {
+            uint256 id = bankId[_add];
+            require(banks[id].isadmin == 1 || _add == owner , "You don't have access.");
+            _;
+        }
             
             //Add new Bloodbank
-          function NewBank(     
+          function NewBank(
             address _add,
             string memory _name,
-            string memory _city, 
+            string memory _city,
             string memory _email,
             uint256 _contact
-        
             ) onlyAdmin(msg.sender) public {
             require(banks[bankId[msg.sender]].isBank == 0,"Bloodbank is already registered");
             counterB++;
+            bankId[msg.sender] = counterB;
             Bloodbank storage bank = banks[counterB];
             bankId[_add] = counterB;
             bank.add = _add;
