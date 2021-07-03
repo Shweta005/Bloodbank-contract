@@ -64,7 +64,7 @@ pragma solidity 0.8.0;
         string _bloodgrp,
         uint256 _recentDonation
     );
-    event BankRegistered(address _bank, string _centerName);
+    event BankRegistered(address _bank,uint256 _cId,string _centerName);
     event BloodRequest(
         address _requester,
         uint256 _cId,
@@ -151,7 +151,7 @@ pragma solidity 0.8.0;
         bank.contact = _contact;
         bank.isBank = 1;
         bank.isadmin = 1;
-        emit BankRegistered(_add, _name);
+        emit BankRegistered(_add,counterB, _name);
     }
 
     //View Bloodbank's Data
