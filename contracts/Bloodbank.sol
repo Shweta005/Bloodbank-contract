@@ -139,9 +139,7 @@ pragma solidity 0.8.0;
             banks[bankId[_add]].isBank == 0,
             "Bloodbank is already registered"
         );
-        
         counterB++;
-        bankId[msg.sender] = counterB;
         Bloodbank storage bank = banks[counterB];
         bankId[_add] = counterB;
         bank.add = _add;

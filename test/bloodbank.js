@@ -46,21 +46,23 @@ contract('Bank', async (accounts) => {
                     bank1.contact,
                     {from: setup.roles.deployer}
                 );
-                const bankId = await setup.bank.bankId(setup.roles.admin);
-                const response = await setup.bank.banks(bankId);
+
+                setup.data.bankId = await setup.bank.bankId(setup.roles.admin);
+                const response = await setup.bank.banks(setup.data.bankId);
                 expect(response.isBank.toString()).to.equal('1');
               
             });
            
             it("should emit event BankRegistered", async () => {
- 
                 await expectEvent.inTransaction(
-                    
                     setup.data.tx.tx,
-                    
                     setup.bank,
-                    "BankRegistered"
+                    "BankRegistered",
+                    {
+                        _cId: "1"
+                    }
                 );
+                // console.log(setup.data.tx.logs[0].args);
                // console.log(setup.bankId);
                 
             });
@@ -83,10 +85,9 @@ contract('Bank', async (accounts) => {
     });
     context(">> Donor", async() => {
             before("!! Setup", async () => {
-                setup = await deploy(accounts);
                 const bankId = await setup.bank.bankId(setup.roles.admin);
                 
-                 donor1.Id = "1",
+                 donor1.Id = 1,
                  donor1.name = "ABC",
                  donor1.city = "Khopoli",
                  donor1.contact = "1234567809",
@@ -129,7 +130,7 @@ contract('Bank', async (accounts) => {
  
                 await expectEvent.inTransaction(
                     
-                    setup.data.tx,
+                    setup.data.tx.tx,
                     
                     setup.bank,
                     "DonorRegistered"
