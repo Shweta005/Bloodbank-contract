@@ -102,7 +102,7 @@ pragma solidity 0.8.0;
         uint256 id = bankId[_add];
         require(
             banks[id].isadmin == 1 || _add == owner,
-            "You don't have access."
+            "You don't admin have access."
         );
         _;
     }
@@ -122,7 +122,7 @@ pragma solidity 0.8.0;
         _age /= 10;
         digits++;
     }
-    require(digits==2 ,"Age is should be 2 digits.");
+    require(digits==2 ,"Age should be 2 digits.");
     _;
    }
 
@@ -234,7 +234,7 @@ pragma solidity 0.8.0;
         uint256 _recentDonation
     ) public validContact(_contact) validAge(_age)  {
         require(donors[donorId[msg.sender]].isDonor == 0, "Already registered");
-        require(banks[_cId].isBank == 1, "Bloodbank not exist");
+        require(banks[_cId].isBank == 1, "Bloodbank does not exist");
         counterD++;
         Donor memory donor;
         donorId[msg.sender] = counterD;
