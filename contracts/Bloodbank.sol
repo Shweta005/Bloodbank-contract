@@ -19,6 +19,7 @@ pragma solidity 0.8.0;
         uint256 _cId;
         uint8 _bloodgrp;
         uint256 _qty;
+        uint8 isRequest;
         uint256 isGranted;
     }
 
@@ -295,7 +296,8 @@ pragma solidity 0.8.0;
         uint256 _units
     ) public {
         counterR++;
-        Requests memory req = Requests(msg.sender, _cId, _bloodgrp, _units, 0);
+        Requests memory req = Requests(msg.sender, _cId, _bloodgrp, _units,0, 0);
+        request[counterR].isRequest = 1;
         request[counterR] = req;
         emit BloodRequest(msg.sender, _cId, _bloodgrp, _units, block.timestamp);
     }
