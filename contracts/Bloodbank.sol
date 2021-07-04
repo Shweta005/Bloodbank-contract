@@ -91,7 +91,7 @@ pragma solidity 0.8.0;
     uint256 public counterD;
     uint256 public counterR;
     uint256[8] Showstock;
-    uint256[] timestamp;
+    uint256[] time;
 
     constructor() {
         owner = msg.sender;
@@ -190,7 +190,8 @@ pragma solidity 0.8.0;
             "Wait for some days."
         );
         donors[_dId]._slot = _slottime;
-        slot[_dId].push(_slottime);
+        time.push(_slottime);
+        slot[_dId].push(_slottime)  ;
         emit Bookslot(_dId, block.timestamp, _slottime);
     }
 
