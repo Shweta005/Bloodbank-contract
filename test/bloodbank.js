@@ -318,6 +318,112 @@ context("$ False Validation: Age", async() => {
     }); 
   });     
 });
-     context(">> Book Slot")
+     context(">>Stock",async()=>{
+        context("$ Add stock", async()=>{
+            before("!! Setup", async () => {
+                bank1.bloodgrp = "3";
+                bank1.quantity = "10";  
+            });
+            it("# update given qty to given bloodgrp", async ()=> {
+                setup.data.tx = await setup.bank.IncreaseStock(
+                    bank1.bloodgrp,
+                    bank1.quantity,
+                    {from: setup.roles.admin}
+                );
+                
+             });
+             it("# Reduce given qty to given bloodgrp", async ()=> {
+                setup.data.tx = await setup.bank.ReduceStock(
+                    bank1.bloodgrp,
+                    bank1.quantity,
+                    {from: setup.roles.admin}
+                );
+                
+             });
+         
+
+     });
+    });
+
+
+
+
+
+
+   context(">> Booking Slot", async() =>{
+         context("$ Booking slot for registered donor", async()=>{
+            before("!! Setup", async () => {
+                donor1.Id = "1";
+                donor1.time = "1625833122";  
+            });
+            it("# Book slot", async ()=> {
+                setup.data.tx = await setup.bank.BookSlot(
+                    donor1.Id,
+                    donor1.time,
+                    {from: setup.roles.admin}
+                );
+             });
+             it("# should emit event Bookslot", async () => {
+                await expectEvent.inTransaction(
+                    setup.data.tx.tx,
+                    setup.bank,
+                    "Bookslot",
+                    {
+                        _dId: "1"
+                    }
+                );    
+            });
+         });
+
+     });
+     context("$ Reverting when recent donation days of regsitred donor is < 56days", async() => {
+        before("!! Setup", async () => {
+            const bankId = await setup.bank.bankId(setup.roles.admin);
+            donor1.Id = 1,
+            donor1.name = "DGH",
+            donor1.city = "Khopoli",
+            donor1.contact = "1234567894",
+            donor1.age = "30",
+            donor1.gender = "Male",
+            donor1.bloodgrp = "A-positive",
+            donor1.cname = "Bank1",
+            donor1.recentDonation = "40",
+           {from: setup.roles.donor2}
+        });  
+       // Register that donor & write revert down that the
+       it("# add a second donor", async () => {
+        setup.data.tx = await setup.bank.RegisterDonor(
+            donor1.Id,
+            donor1.name,
+            donor1.city,
+            donor1.contact,
+            donor1.age,
+            donor1.gender,
+            donor1.bloodgrp,
+            donor1.cname,
+            donor1.recentDonation,
+           {from: setup.roles.donor2}
+        );
+    
+    });
+      context("$ Booking slot for registered donor2", async()=>{
+        before("!! Setup", async () => {
+            donor1.Id = "2";
+            donor1.time = "1625833122";  
+        });
+        it("# Reverts", async () => {
+            await expectRevert(
+                setup.bank.BookSlot(
+                donor1.Id,
+                donor1.time,
+                {from: setup.roles.admin}
+                ),
+                "Wait for some days."
+            );
+        });
+        
+     });    
+    });
+
 
 });
