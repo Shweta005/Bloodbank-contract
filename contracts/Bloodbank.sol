@@ -99,11 +99,19 @@ pragma solidity 0.8.0;
     }
 
     //admin check
-    modifier onlyAdmin(address _add) {
+    modifier onlyAdminOwner(address _add) {
         uint256 id = bankId[_add];
         require(
-            banks[id].isadmin == 1 || _add == owner,
-            "You don't admin have access."
+            banks[id].isadmin == 1||  _add == owner ,
+            "You don't owner have access."
+        );
+        _;
+    }
+ modifier onlyAdmin(address _add) {
+        uint256 id = bankId[_add];
+        require(
+            banks[id].isadmin == 1,
+            "You don't have admin access."
         );
         _;
     }
@@ -134,7 +142,7 @@ pragma solidity 0.8.0;
         string memory _city,
         string memory _email,
         uint256 _contact
-    ) public onlyAdmin(msg.sender) validContact(_contact)  {
+    ) public onlyAdminOwner(msg.sender)  validContact(_contact)  {
         require(_add != owner, "Owner:You cant be register as a bank.");
         require(
             banks[bankId[_add]].isBank == 0,
@@ -195,12 +203,29 @@ pragma solidity 0.8.0;
         slot[_dId].push(_slottime)  ;
         emit Bookslot(_dId, block.timestamp, _slottime);
     }
+//Request for blood to particular center
+    function RequestBlood(
+        uint256 _cId,
+        uint8 _bloodgrp,
+        uint256 _units
+    ) public {
+          require(banks[_cId].stock[_bloodgrp] != 0, "Stock is empty");
+        counterR++;
+        Requests memory req = Requests(msg.sender, _cId, _bloodgrp, _units,1, 0);
+        request[counterR] = req;
+        emit BloodRequest(msg.sender, _cId, _bloodgrp, _units, block.timestamp);
+    }
 
-    //If stock is available admin will grant request
+    //If stock is available admin will grant request 
+    //id -request id
     function GrantRequest(uint256 _id) public onlyAdmin(msg.sender) {
         //Admin will grant the blood request  if stock available
-        uint8 grp = request[_id]._bloodgrp;
-        require(banks[_id].stock[grp] != 0, "Stock is empty");
+        //uint8 grp = request[_id]._bloodgrp;
+        //uint256 cid = request[_id]._cId;
+        //require(banks[cid].stock[grp] != 0, "Stock is empty");
+       // uint256 qty = request[_id]._qty;
+       // banks[cid].stock[grp] -= qty;
+        //emit StockDecreased(msg.sender, grp, qty, block.timestamp);
         request[_id].isGranted = 1;
         emit RequestGranted(msg.sender, _id, block.timestamp);
     }
@@ -289,19 +314,7 @@ pragma solidity 0.8.0;
         );
     }
 
-    //Request for blood to particular center
-    function RequestBlood(
-        uint256 _cId,
-        uint8 _bloodgrp,
-        uint256 _units
-    ) public {
-        counterR++;
-        Requests memory req = Requests(msg.sender, _cId, _bloodgrp, _units,0, 0);
-        request[counterR].isRequest = 1;
-        request[counterR] = req;
-        emit BloodRequest(msg.sender, _cId, _bloodgrp, _units, block.timestamp);
-    }
-
+    
     //Stock availability
     function viewStock(address _add) public view returns (uint256[8] memory) {
         uint256[8] memory s;
