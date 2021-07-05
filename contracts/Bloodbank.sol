@@ -19,6 +19,7 @@ pragma solidity 0.8.0;
         uint256 _cId;
         uint8 _bloodgrp;
         uint256 _qty;
+        uint8 isRequest;
         uint256 isGranted;
     }
 
@@ -64,7 +65,7 @@ pragma solidity 0.8.0;
         string _bloodgrp,
         uint256 _recentDonation
     );
-    event BankRegistered(address _bank, string _centerName);
+    event BankRegistered(address _bank,uint256 _cId,string _centerName);
     event BloodRequest(
         address _requester,
         uint256 _cId,
@@ -91,7 +92,7 @@ pragma solidity 0.8.0;
     uint256 public counterD;
     uint256 public counterR;
     uint256[8] Showstock;
-    uint256[] timestamp;
+    uint256[] time;
 
     constructor() {
         owner = msg.sender;
@@ -102,7 +103,7 @@ pragma solidity 0.8.0;
         uint256 id = bankId[_add];
         require(
             banks[id].isadmin == 1 || _add == owner,
-            "You don't have access."
+            "You don't admin have access."
         );
         _;
     }
@@ -122,7 +123,7 @@ pragma solidity 0.8.0;
         _age /= 10;
         digits++;
     }
-    require(digits==2 ,"Age is should be 2 digits.");
+    require(digits==2 ,"Age should be 2 digits.");
     _;
    }
 
@@ -139,9 +140,7 @@ pragma solidity 0.8.0;
             banks[bankId[_add]].isBank == 0,
             "Bloodbank is already registered"
         );
-        
         counterB++;
-        bankId[msg.sender] = counterB;
         Bloodbank storage bank = banks[counterB];
         bankId[_add] = counterB;
         bank.add = _add;
@@ -151,7 +150,7 @@ pragma solidity 0.8.0;
         bank.contact = _contact;
         bank.isBank = 1;
         bank.isadmin = 1;
-        emit BankRegistered(_add, _name);
+        emit BankRegistered(_add,counterB, _name);
     }
 
     //View Bloodbank's Data
@@ -192,7 +191,8 @@ pragma solidity 0.8.0;
             "Wait for some days."
         );
         donors[_dId]._slot = _slottime;
-        slot[_dId].push(_slottime);
+        time.push(_slottime);
+        slot[_dId].push(_slottime)  ;
         emit Bookslot(_dId, block.timestamp, _slottime);
     }
 
@@ -236,7 +236,7 @@ pragma solidity 0.8.0;
         uint256 _recentDonation
     ) public validContact(_contact) validAge(_age)  {
         require(donors[donorId[msg.sender]].isDonor == 0, "Already registered");
-        require(banks[_cId].isBank == 1, "Bloodbank not exist");
+        require(banks[_cId].isBank == 1, "Bloodbank does not exist");
         counterD++;
         Donor memory donor;
         donorId[msg.sender] = counterD;
@@ -296,7 +296,8 @@ pragma solidity 0.8.0;
         uint256 _units
     ) public {
         counterR++;
-        Requests memory req = Requests(msg.sender, _cId, _bloodgrp, _units, 0);
+        Requests memory req = Requests(msg.sender, _cId, _bloodgrp, _units,0, 0);
+        request[counterR].isRequest = 1;
         request[counterR] = req;
         emit BloodRequest(msg.sender, _cId, _bloodgrp, _units, block.timestamp);
     }
