@@ -21,6 +21,8 @@ contract("Bank", async (accounts) => {
   let setup;
   let bank1 = {};
   let donor1 = {};
+  let requester = {};
+  let owner = {};
   context(">> deploy contract", async () => {
     before("!! Setup", async () => {
       setup = await deploy(accounts);
@@ -34,7 +36,7 @@ contract("Bank", async (accounts) => {
       expect(await setup.bank.owner()).to.equal(setup.roles.deployer);
     });
   });
-
+//////////////////////////////////////////////////deploy contract ended////////////////////////////
   context(">> NewBank", async () => {
     context("$ regsitering for the first time", async () => {
       it("# add a new bank", async () => {
@@ -47,7 +49,6 @@ contract("Bank", async (accounts) => {
           { from: setup.roles.deployer }
         );
       });
-
       it("# Bank is Exist ", async () => {
         //  setup.data.bankId = await setup.bank.bankId(setup.roles.admin)
         const bankId = await setup.bank.bankId(setup.roles.admin);
@@ -60,7 +61,6 @@ contract("Bank", async (accounts) => {
         const response = await setup.bank.banks(bankId);
         expect(response.isadmin.toString()).to.equal("1");
       });
-
       it("# should emit event BankRegistered", async () => {
         await expectEvent.inTransaction(
           setup.data.tx.tx,
@@ -74,7 +74,6 @@ contract("Bank", async (accounts) => {
         // console.log(setup.bankId);
       });
     });
-
     context("$ registering again", async () => {
       it("# Reverts", async () => {
         await expectRevert(
@@ -130,11 +129,12 @@ contract("Bank", async (accounts) => {
             bank1.contact,
             { from: setup.roles.donor1 }
           ),
-          "You don't admin have access."
+          "You don't owner have access."
         );
       });
     });
   });
+  ///////////////////////////////////////////New bank ended//////////////////////////////////////////
   context(">> Donor", async () => {
     before("!! Setup", async () => {
       const bankId = await setup.bank.bankId(setup.roles.admin);
@@ -156,7 +156,7 @@ contract("Bank", async (accounts) => {
       expect(response.isDonor.toString()).to.equal("0");
     });
   });
-
+///////////////////////Donor Ended//////////////////////////////////////////////////
   context(">> New Donor", async () => {
     context("$ regsitering donor for the first time", async () => {
       it("# add a new donor", async () => {
@@ -305,6 +305,7 @@ contract("Bank", async (accounts) => {
       });
     });
   });
+//////////////////////////////////////////////donor ended//////////////////////////////////////////
   context(">> Booking Slot", async () => {
     context("$ Booking slot for registered donor", async () => {
       before("!! Setup", async () => {
@@ -328,6 +329,8 @@ contract("Bank", async (accounts) => {
       });
     });
   });
+
+  ///////////////////////////booking slot ended//////////////////////////////////////////////////
   context(
     "$ Reverting when recent donation days of regsitred donor is < 56days",
     async () => {
@@ -346,18 +349,17 @@ contract("Bank", async (accounts) => {
       });
       // Register that donor & write revert down that the
       it("# add a second donor", async () => {
-        setup.data.tx = await setup.bank.RegisterDonor(
-          donor1.Id,
-          donor1.name,
-          donor1.city,
-          donor1.contact,
-          donor1.age,
-          donor1.gender,
-          donor1.bloodgrp,
-          donor1.cname,
-          donor1.recentDonation,
-          { from: setup.roles.donor2 }
-        );
+        setup.data.tx = await setup.bank.RegisterDonor( 
+           donor1.Id,
+           donor1.name,
+           donor1.city,
+           donor1.contact,
+           donor1.age,
+           donor1.gender,
+           donor1.bloodgrp,
+           donor1.cname,
+           donor1.recentDonation,
+          { from: setup.roles.donor2 });
       });
       context("$ Booking slot for registered donor2", async () => {
         before("!! Setup", async () => {
@@ -376,11 +378,13 @@ contract("Bank", async (accounts) => {
         });
       });
     });
-   context(">>Stock", async () => {
+////////////////////reverting donor 56 days/////////////////////////////////////
+   
+context(">>Stock", async () => {
    context("$ Add stock", async () => {
         before("!! Setup", async () => {
         bank1.bloodgrp = "3";
-        bank1.quantity = "10";
+        bank1.quantity = "20";
       });
       it("# update given qty to given bloodgrp", async () => {
         setup.data.tx = await setup.bank.IncreaseStock(
@@ -389,58 +393,12 @@ contract("Bank", async (accounts) => {
           { from: setup.roles.admin }
         );
       });
-     
-      context(">> Request", async()=>{
-        context("$ Request Blood from center", async() => {
-           before("!! Setup", async () => {
-                donor1.Id = "1",
-                donor1.bloodgrp ="3",
-                donor1.unit ="2"
-                });
-            it("# Request blood from center1",async()=>{
-                setup.data.tx = await setup.bank.RequestBlood(
-                  donor1.Id,
-                  donor1.bloodgrp,
-                  donor1.unit,
-                  { from: setup.roles.donor1}
-                );
-            });    
-            it("# should emit event BloodRequest", async () => {
-                await expectEvent.inTransaction(
-                  setup.data.tx.tx,
-                  setup.bank,
-                  "BloodRequest",
-                  {
-                    _cId: "1",
-                  }
-                );
-            });
-   /* context("$ Grant Request", async() => {
-                before("!! Setup", async () => {
-                     bank1.Id = "2"
-                     });
-            it("# Grant Request of donor if stock exist",async()=>{
-                        setup.data.tx = await setup.bank.GrantRequest(
-                          bank1.Id,
-                          {from: setup.roles.admin}
-                        );
-                    }); 
-            it("# should emit event RequestGranted", async () => {
-                        await expectEvent.inTransaction(
-                          setup.data.tx.tx,
-                          setup.bank,
-                          "RequestGranted",
-                          {
-                            _id: "1",
-                          }
-                        );
-                    });
-                });*/
 
-
-
-                });
-            });
+ context("$ Reduce stock", async () => {
+        before("!! Setup", async () => {
+        bank1.bloodgrp = "3";
+        bank1.quantity = "2";
+      });
       it("# Reduce given qty to given bloodgrp", async () => {
         setup.data.tx = await setup.bank.ReduceStock(
           bank1.bloodgrp,
@@ -449,34 +407,142 @@ contract("Bank", async (accounts) => {
         );
       });
     });
+    /*context('$ Show stock', async () => {
+      before("!! Setup", async () => {
+        bank1.address = setup.roles.admin;
+      });
+      it("# View stock", async () => {
+        setup.data.tx = await setup.bank.viewStock(
+          bank1.address,
+          { from: setup.roles.admin}
+        );
+        expect((await setup.bank.viewStock()).length).to.equal(0);
+      });
+      
+    });*/
   });
- /* it("$ Grant Request", async() => {
-    before("!! Setup", async () => {
-         bank1.Id = "1"
-         });
- 
-it("# Grant Request of donor if stock exist",async()=>{
-            setup.data.tx = await setup.bank.GrantRequest(
-              bank1.Id,
-              {from: setup.roles.admin}
-            );
-        }); 
-it("# should emit event RequestGranted", async () => {
-            await expectEvent.inTransaction(
-              setup.data.tx.tx,
-              setup.bank,
-              "RequestGranted",
-              {
-                _id: "1",
-              }
-            );
-        });
+}); 
+
+  /////////////////////////stock ended//////////////////////////////
+ context(">> Blood Request", async () =>{
+    context("$ Requester is requesting blood",async() => {
+      before("!! Setup", async () => {
+        requester.CenterId = "1",
+        requester.bloodgrp = "3";
+        requester.quantity = "5";
+      });
+      it("# Requester's blood request to center1", async () => {
+        setup.data.tx = await setup.bank.RequestBlood(
+          requester.CenterId,
+          requester.bloodgrp,
+          requester.quantity,
+          { from: setup.roles.requester}
+        );
+    }); 
+    it("# should emit event BloodRequest", async () => {
+      await expectEvent.inTransaction(
+        setup.data.tx.tx,
+        setup.bank,
+        "BloodRequest"
+      );
+    }); 
  });
-context(">> View functions",async() => {
-     it("$ View Bank", async() =>{
-        const bankId = await setup.bank.bankId(setup.roles.admin);
-        setup.data.tx = await setup.bank.ViewBank(
-            bank1
+ context("$ Requester can be admin",async() => {
+  before("!! Setup", async () => {
+    bank1.CenterId = "1",
+    bank1.bloodgrp = "3";
+    bank1.quantity = "5";
+  });
+  it("# Admin's blood request to center1", async () => {
+    setup.data.tx = await setup.bank.RequestBlood(
+      bank1.CenterId,
+      bank1.bloodgrp,
+      bank1.quantity,
+      { from: setup.roles.admin}
+    );
+});  
+});
+context("$ Requester can be admin",async() => {
+  before("!! Setup", async () => {
+    donor1.CenterId = "1",
+    donor1.bloodgrp = "3";
+    donor1.quantity = "5";
+  });
+  it("# Admin's blood request to center1", async () => {
+    setup.data.tx = await setup.bank.RequestBlood(
+      donor1.CenterId,
+      donor1.bloodgrp,
+      donor1.quantity,
+      { from: setup.roles.donor1}
+    );
+});  
+});
+  context("$ Requester can be Deployer",async() => {
+    before("!! Setup", async () => {
+    owner.CenterId = "1",
+    owner.bloodgrp = "3";
+    owner.quantity = "5";
      });
-});*/
+    it("# Deployer's blood request to center1", async () => {
+    setup.data.tx = await setup.bank.RequestBlood(
+      owner.CenterId,
+      owner.bloodgrp,
+      owner.quantity,
+      { from: setup.roles.deployer}
+           );
+       });  
+    });
+    context("$ Requester- Deployer",async() => {
+      before("!! Setup", async () => {
+      owner.CenterId = "1",
+      owner.bloodgrp = "4";
+      owner.quantity = "5";
+       });
+       it("# Reverts", async () => {
+        await expectRevert(
+          setup.bank.RequestBlood(
+            owner.CenterId,
+            owner.bloodgrp,
+            owner.quantity,
+            { from: setup.roles.deployer }
+          ),
+          "Stock is empty"
+        );
+      });  
+      });
+});
+context(">> Grant Request", async() => {
+  context("$ Request can be granted by only admin",async() => {
+    before("!! Setup", async () => {
+    bank1.reqId = "1"
+     });
+    it("# Admin is granted 1st request", async () => {
+    setup.data.tx = await setup.bank.GrantRequest(
+      bank1.reqId,
+      { from: setup.roles.admin}
+           );
+       });  
+       it("# Reverts", async () => {
+        await expectRevert(
+          setup.bank.GrantRequest(
+            bank1.reqId = "1",
+            { from: setup.roles.deployer }
+          ),
+          "You don't have admin access."
+        );
+      }); 
+       it("# should emit event RequestGranted", async () => {
+        await expectEvent.inTransaction(
+          setup.data.tx.tx,
+          setup.bank,
+          "RequestGranted"
+        );
+      }); 
+    });
+});
+
+
+
+
+
 });
