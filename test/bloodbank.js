@@ -3,7 +3,7 @@ const { Bank, BN, expectRevert, expectEvent, time, constants, Events: events } =
 
 const deploy = async (accounts) => {
 	const setup = init.init(accounts);
-
+  //console.log(setup)
 	setup.bank = await init.setupBank(setup.roles.deployer);
 	//setup.bank is contract
 	return setup;
@@ -60,6 +60,18 @@ contract("Bank", async (accounts) => {
 				// console.log(setup.data.tx.logs[0].args);
 				// console.log(setup.bankId);
 			});
+      it("# viewBank", async () => {
+        const result = await setup.bank.ViewBank(setup.roles.admin);
+        //console.log(result);
+        expect( result['0']).to.equal(bank1.address);
+        expect(result['1']).to.equal(bank1.name);
+        expect( result['2']).to.equal(bank1.city);
+        expect( result['3']).to.equal(bank1.email);
+        expect( result['4'].toString()).to.equal(bank1.contact.toString());
+        expect( result['5'].toString()).to.equal("1");
+        expect( result['6'].toString()).to.equal("1");
+      });	
+      
 		});
 		context("$ registering again", async () => {
 			it("# Reverts", async () => {
@@ -144,6 +156,7 @@ contract("Bank", async (accounts) => {
 					donor1.recentDonation,
 					{ from: setup.roles.donor1 }
 				);
+        console.log(setup.data.tx.logs);
 			});
 			it("# should emit event DonorRegistered", async () => {
 				await expectEvent.inTransaction(setup.data.tx.tx, setup.bank, "DonorRegistered");
@@ -154,6 +167,22 @@ contract("Bank", async (accounts) => {
 				const response = await setup.bank.donors(donorId);
 				expect(response.isDonor.toString()).to.equal("1");
 			});
+      it("# viewDonor", async () => {
+        const result = await setup.bank.ViewDonor(setup.roles.donor1);
+        //console.log(result);
+        //console.log(setup.roles.donor1);
+      	expect( result['0']).to.equal(setup.roles.donor1);
+        expect(result['1'].toString()).to.equal(donor1.Id.toString());
+        expect( result['2']).to.equal(donor1.name);
+        expect( result['3']).to.equal(donor1.city);
+        expect( result['4'].toString()).to.equal(donor1.contact.toString());
+        expect( result['5'].toString()).to.equal( donor1.age.toString());
+        expect( result['6']).to.equal(donor1.gender);
+        expect( result['7']).to.equal(donor1.bloodgrp);
+        expect( result['8']).to.equal(donor1.cname);
+        expect( result['9'].toString()).to.equal((donor1.recentDonation * 86400).toString());
+        expect( result['10'].toString()).to.equal('0');
+      });
 		});
 		context("$ donor registering again", async () => {
 			it("# Reverts", async () => {
@@ -361,19 +390,6 @@ contract("Bank", async (accounts) => {
 					});
 				});
 			});
-			/*context('$ Show stock', async () => {
-	  before("!! Setup", async () => {
-		bank1.address = setup.roles.admin;
-	  });
-	  it("# View stock", async () => {
-		setup.data.tx = await setup.bank.viewStock(
-		  bank1.address,
-		  { from: setup.roles.admin}
-		);
-		expect((await setup.bank.viewStock()).length).to.equal(0);
-	  });
-	  
-	});*/
 		});
 	});
 
@@ -468,29 +484,5 @@ contract("Bank", async (accounts) => {
 			const result = await setup.bank.viewStock(setup.roles.admin);
 			expect(typeof result).to.equal(typeof []);
 		});
-    it("# viewDonor", async () => {
-			const result = await setup.bank.ViewDonor(setup.roles.donor1);
-			expect(typeof result.address).to.equal(typeof address);
-      expect(typeof result.cId).to.equal(typeof uint256);
-      expect(typeof result.name).to.equal(typeof string);
-      expect(typeof result.city).to.equal(typeof string);
-      expect(typeof result.contact).to.equal(typeof uint256);
-      expect(typeof result.age).to.equal(typeof uint256);
-      expect(typeof result.gender).to.equal(typeof string);
-      expect(typeof result.bloodgrp).to.equal(typeof string);
-      expect(typeof result.cname).to.equal(typeof string);
-      expect(typeof result.recentDonation).to.equal(typeof address);
-      expect(typeof result._slot).to.equal(typeof uint256);
-		});
-    it("# viewBank", async () => {
-			const result = await setup.bank.ViewBank(setup.roles.bank1);
-			expect(typeof result.address).to.equal(typeof address);
-      expect(typeof result.name).to.equal(typeof string);
-      expect(typeof result.city).to.equal(typeof string);
-      expect(typeof result.email).to.equal(typeof string);
-      expect(typeof result.contact).to.equal(typeof uint256);
-      expect(typeof result.isBank).to.equal(typeof uint8);
-      expect(typeof result.isadmin).to.equal(typeof uint8);
-		});	
 	});
 });
