@@ -468,13 +468,29 @@ contract("Bank", async (accounts) => {
 			const result = await setup.bank.viewStock(setup.roles.admin);
 			expect(typeof result).to.equal(typeof []);
 		});
-		// it("# Reverts", async () => {
-		// 	const result = await setup.bank.viewStock(setup.roles.admin);
-		// 	console.log(result);
-		// });
-		// it("# should emit event RequestGranted", async () => {
-		// 	const result = await setup.bank.viewStock(setup.roles.admin);
-		// 	console.log(result);
-		// });
+    it("# viewDonor", async () => {
+			const result = await setup.bank.ViewDonor(setup.roles.donor1);
+			expect(typeof result.address).to.equal(typeof address);
+      expect(typeof result.cId).to.equal(typeof uint256);
+      expect(typeof result.name).to.equal(typeof string);
+      expect(typeof result.city).to.equal(typeof string);
+      expect(typeof result.contact).to.equal(typeof uint256);
+      expect(typeof result.age).to.equal(typeof uint256);
+      expect(typeof result.gender).to.equal(typeof string);
+      expect(typeof result.bloodgrp).to.equal(typeof string);
+      expect(typeof result.cname).to.equal(typeof string);
+      expect(typeof result.recentDonation).to.equal(typeof address);
+      expect(typeof result._slot).to.equal(typeof uint256);
+		});
+    it("# viewBank", async () => {
+			const result = await setup.bank.ViewBank(setup.roles.bank1);
+			expect(typeof result.address).to.equal(typeof address);
+      expect(typeof result.name).to.equal(typeof string);
+      expect(typeof result.city).to.equal(typeof string);
+      expect(typeof result.email).to.equal(typeof string);
+      expect(typeof result.contact).to.equal(typeof uint256);
+      expect(typeof result.isBank).to.equal(typeof uint8);
+      expect(typeof result.isadmin).to.equal(typeof uint8);
+		});	
 	});
 });
