@@ -165,7 +165,6 @@ pragma solidity 0.8.0;
     function ViewBank(address _add)
         public
         view
-        onlyAdmin(msg.sender)
         returns (
             address,
             string memory,
@@ -300,7 +299,7 @@ pragma solidity 0.8.0;
     {
         uint256 id = donorId[_add];
         return (
-            donors[id].add,
+           donors[id].add,
             donors[id].cId,
             donors[id].name,
             donors[id].city,
